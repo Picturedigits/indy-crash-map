@@ -136,7 +136,8 @@ function normalizeCrash(row) {
         d: dateToTS(dateValue) / 100000.0,
         s: severity,
         p: crashType === 'Pedestrian' ? 1 : 0,
-        c: crashType === 'Pedalcycle' ? 1 : 0
+        c: crashType === 'Pedalcycle' ? 1 : 0,
+        interstate: row.interstate === 'True' ? 1 : 0
     };
 }
 
@@ -206,6 +207,7 @@ function updatePermalink() {
         'view=' + ($('#viewPoints').prop('checked') ? 'points' : 'heatmap'),
         'inv=' + inv.join(','),
         'harm=' + harm.join(','),
+        'interstate=' + ($('#showInterstate').prop('checked') ? '1' : '0'),
         'labels=' + ($('#labels').prop('checked') ? '1' : '0')
     ];
     history.replaceState(null, '', '#' + parts.join('&'));
@@ -227,7 +229,9 @@ function updateHeatLayer(from, to, shouldFitMap) {
                 || ($('#pedestrians').prop('checked') ? point.p === 1 : false))
 
             && (($('#fatalInjury').prop('checked') ? point.s === 'K' : false)
-                || ($('#seriousInjury').prop('checked') ? point.s === 'I' : false));
+                || ($('#seriousInjury').prop('checked') ? point.s === 'I' : false))
+
+            && ($('#showInterstate').prop('checked') ? true : point.interstate === 0);
     });
 
     updateStatsDashboard(
@@ -430,6 +434,8 @@ if (_initPermalink) {
     $('#fatalInjury').prop('checked', _harm.indexOf('fatal') >= 0);
     $('#seriousInjury').prop('checked', _harm.indexOf('serious') >= 0);
 
+    if (_initPermalink.interstate === '0') { $('#showInterstate').prop('checked', false); }
+
     if (_initPermalink.labels === '0') { $('#labels').prop('checked', false); map.removeLayer(labels); }
 
     pendingPermalink = _initPermalink;
@@ -440,5 +446,5 @@ updateViewModeAvailability();
 loadRegion(regionToLoad);
 
 L.control.attribution({
-    prefix: '<a href="https://github.com/Picturedigits/mass-crash-map">Code by Picturedigits</a> + <a href="https://jackdougherty.org">Jack Dougherty</a> + <a href="https://labs.bostoncyclistsunion.org">BCU Labs</a> + <a href="https://github.com/BU-Spark">BU Spark!</a>'
+    prefix: '<a href="https://github.com/Picturedigits/indy-crash-map">Code by Picturedigits</a> (<a href="https://ilyankou.com">Ilya Ilyankou</a>) +  <a href="https://jackdougherty.org">Jack Dougherty</a>'
 }).addTo(map)

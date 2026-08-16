@@ -14,7 +14,7 @@ Map design by [Jack Dougherty](https://jackdougherty.org) and [Ilya Ilyankou](ht
 - Mobile-first design works both on smaller screens (click arrow to expand legend on smartphone) and larger screens
 - Copy browser link to share your view of the map (location, zoom level, data layer) with others
 - Filter by crash type (involving pedestrians, cyclists & micromobility users, other vulnerable users, or motorists only)
-- Filter by date range (2021 onward), severity (with fatalities, or with any injury), and interstate highway (for MassDOT data only)
+- Filter by date range (2021 onward), severity (with fatalities, or with any injury), and interstate highway (inferred from the crash's street address, so may be inaccurate)
 - Click symbol points for popup info about specific crashes
 
 ### Run map on your local computer
