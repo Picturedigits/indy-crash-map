@@ -142,8 +142,8 @@ function normalizeCrash(row) {
 }
 
 function getPopupHtml(crash) {
-    return '<strong>Crash ID ' + crash.id + '</strong><br />'
-        + tsToDate(crash.d * tsCoef)
+    //return '<strong>Crash ID ' + crash.id + '</strong><br />'
+    return '<strong>' + tsToDate(crash.d * tsCoef) + '</strong>'
         + '<br />County: ' + (crash.county || 'Unknown')
         + '<br />City: ' + (crash.city || 'Unknown')
         + '<br />Cross street: ' + (crash.crossStreet || 'Unknown')
